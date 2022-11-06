@@ -11,6 +11,11 @@ class ItemController extends AbstractController
      */
     public function index(): string
     {
+        if (!$this->user) {
+            echo 'Unauthorized access';
+            header('HTTP/1.1 401 Unauthorized');
+            exit();
+        }
         $itemManager = new ItemManager();
         $items = $itemManager->selectAll('title');
 
@@ -23,6 +28,11 @@ class ItemController extends AbstractController
      */
     public function show(int $id): string
     {
+        if (!$this->user) {
+            echo 'Unauthorized access';
+            header('HTTP/1.1 401 Unauthorized');
+            exit();
+        }
         $itemManager = new ItemManager();
         $item = $itemManager->selectOneById($id);
 
@@ -35,6 +45,11 @@ class ItemController extends AbstractController
      */
     public function edit(int $id): string
     {
+        if (!$this->user) {
+            echo 'Unauthorized access';
+            header('HTTP/1.1 401 Unauthorized');
+            exit();
+        }
         $itemManager = new ItemManager();
         $item = $itemManager->selectOneById($id);
 
@@ -60,6 +75,11 @@ class ItemController extends AbstractController
      */
     public function add(): string
     {
+        if (!$this->user) {
+            echo 'Unauthorized access';
+            header('HTTP/1.1 401 Unauthorized');
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // clean $_POST data
             $item = array_map('trim', $_POST);
@@ -81,6 +101,11 @@ class ItemController extends AbstractController
      */
     public function delete()
     {
+        if (!$this->user) {
+            echo 'Unauthorized access';
+            header('HTTP/1.1 401 Unauthorized');
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = trim($_POST['id']);
             $itemManager = new ItemManager();
